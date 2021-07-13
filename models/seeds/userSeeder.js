@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('../user') // 載入 user model
+require('../../config/mongoose')
 
 const users = [
   {
@@ -29,11 +30,6 @@ const users = [
   }
 ]
 
-mongoose.connect('mongodb://localhost/users', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongodb error!')
-})
 db.once('open', () => {
   User.create(users)
   console.log('done')
