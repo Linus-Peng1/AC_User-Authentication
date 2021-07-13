@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
 const User = require('./models/user')
+const routes = require('./routes')
 
 const app = express()
 const port = 3000
@@ -24,23 +25,7 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes
-app.get('/login', (req, res) => {
-  res.render('login')
-})
-
-app.post('/login', (req, res) => {
-  const { email, password } = req.body
-
-  User.find({ email, password })
-    .lean()
-    .then(user => {
-      if (user.length === 1) {
-        res.render('welcome', { name: user[0].firstName })
-      }
-      res.render('login', { loginFail: "true", email })
-    })
-    .catch(error => console.log(error))
-})
+app.use(routes)
 
 app.listen(port, () => {
   console.log(`app is running on http://localhost:${port}/login`)
