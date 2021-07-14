@@ -1,6 +1,5 @@
-const mongoose = require('mongoose')
 const User = require('../user') // 載入 user model
-require('../../config/mongoose')
+const db = require('../../config/mongoose')
 
 const users = [
   {
